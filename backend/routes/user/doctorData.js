@@ -3,6 +3,7 @@ import { Doctor } from '../../models/Doctor.js';
 
 const router = express.Router();
 
+// fetch all available doctors list
 router.get('/api/user/doctor-list'), async (req, res) => {
    try{
      const found = await Doctor.find();
@@ -22,6 +23,7 @@ router.get('/api/user/doctor-list'), async (req, res) => {
    }
 });
 
+// fetch a single doctor with id
 router.get('/api/user/doctor'), async (req, res) => {
 
   const id = req.query.id;
