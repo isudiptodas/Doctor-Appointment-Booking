@@ -53,3 +53,5 @@ router.get('/api/user/doctor'), async (req, res) => {
    }
 });
 
+
+export default router;
