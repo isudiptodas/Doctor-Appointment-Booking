@@ -60,7 +60,7 @@ router.post('/api/doctor/login', async (req, res) => {
     }
 });
 
-// user register
+// doctor register
 router.post('/api/doctor/register', async (req, res) => {
   const { name, email, password, hospital, speciality } = req.body;
  
