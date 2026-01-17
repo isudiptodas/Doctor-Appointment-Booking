@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import userAuth from './routes/user/userAuth.js';
+import doctorAuth from './routes/doctor/doctorAuth.js';
 
 const app = express();
 
@@ -12,6 +14,9 @@ app.use(cors({
 }));
 
 const port = process.env.PORT || 5000:
+
+app.use(userAuth);
+app.use(doctorAuth);
 
 app.listen(port, () => {
   console.log(`server started`);
