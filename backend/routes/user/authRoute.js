@@ -28,7 +28,7 @@ router.post('/api/user/login', async (req, res) => {
             });
         }
 
-        const token = jwt.sign({email: email, name: present.name, userId: present._id }, process.env.JWT_SECRET, {expiresIn: '1d'});
+        const token = jwt.sign({email: email, name: present.name, userId: present._id, role: 'USER' }, process.env.JWT_SECRET, {expiresIn: '1d'});
 
         res.cookie('token', token, {
           httpOnly: true,
