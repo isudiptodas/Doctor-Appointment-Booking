@@ -1,7 +1,39 @@
 import jwt from 'jsonwebtoken';
 import express from 'express';
+import { arcjet } from '../config/arcjetSecurity.js';
+import { isSpoofedBot } from "@arcjet/inspect";
 
 export const authenticate = async (req, res, next) => {
+
+  const decision = await arcjet.protect(req, { requested: 5 }); 
+
+    if (decision.isDenied()) {
+      if (decision.reason.isRateLimit()) {
+        return res.status(429).json({
+        success: false,
+        message: 'Too many request'
+       });
+     }
+      else if (decision.reason.isBot()) {
+        return res.status(403).json({
+        success: false,
+        message: 'Bot detected'
+      });
+     }
+      else {
+        return res.status(403).json({
+        success: false,
+        message: 'Forbidden'
+      });
+    }
+  }
+  else if (decision.results.some(isSpoofedBot)) {
+    return res.status(403).json({
+      success: false,
+      message: 'Bot detected'
+    });
+  }
+  
   const token = req.cookies.token;
 
   if(!token){
