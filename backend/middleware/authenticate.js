@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import express from 'express';
 import { arcjet } from '../config/arcjetSecurity.js';
-import { isSpoofedBot } from "@arcjet/inspect";
 
 export const authenticate = async (req, res, next) => {
 
