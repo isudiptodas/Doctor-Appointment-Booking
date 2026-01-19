@@ -14,7 +14,7 @@ router.get('/api/hospital/verify', authenticate, (req, res) = > {
 });
 
 // retrieves current logged in hospital data
-router.get('/api/user/get-data', authenticate, (req, res) = > {
+router.get('/api/hospital/get-data', authenticate, (req, res) = > {
 
   const hospitalData = req.userData;
 
