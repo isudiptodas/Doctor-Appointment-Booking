@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'seasons';
+  src: url("/fonts/the-seasons.otf") format("opentype");
+}
+
+@font-face {
+  font-family: 'lora';
+  src: url("/fonts/lora-regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'telegraf';
+  src: url("/fonts/telegraf.ttf") format("truetype");
+}
+
+@theme {
+  --font-Telegraf: "telegraf"; 
+  --font-Seasons: "seasons"; 
+  --font-Lora: "lora"; 
+}
