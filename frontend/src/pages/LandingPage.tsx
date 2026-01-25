@@ -8,6 +8,8 @@ import { IoIosMedical } from "react-icons/io";
 import { MdArrowOutward } from "react-icons/md";
 import { MdOutlinePerson2 } from "react-icons/md";
 import { motion } from 'framer-motion';
+import { IoSparklesSharp } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 function LandingPage() {
 
@@ -59,8 +61,8 @@ function LandingPage() {
                     </div>
 
                     <div className={`w-full absolute bottom-10 flex flex-col justify-center items-center md:flex-row gap-2 md:gap-5`}>
-                        <p className={`w-auto font-Telegraf text-[14px] flex justify-center items-center gap-2 px-4 py-2 text-black rounded-full bg-white/20 cursor-pointer`}>Enter profile <MdArrowOutward /></p>
-                        <p className={`w-auto font-Telegraf text-[14px] flex justify-center items-center gap-2 px-4 py-1 text-white border-b border-b-white cursor-pointer`}>Create an account <MdOutlinePerson2 /></p>
+                        <Link to='/auth/login' className={`w-auto font-Telegraf text-[14px] flex justify-center items-center gap-2 px-4 py-2 text-black rounded-full bg-white/20 cursor-pointer`}>Enter profile <MdArrowOutward /></Link>
+                        <Link to='/auth/register' className={`w-auto font-Telegraf text-[14px] flex justify-center items-center gap-2 px-4 py-1 text-white border-b border-b-white cursor-pointer`}>Create an account <MdOutlinePerson2 /></Link>
                     </div>
                 </div>
 
@@ -83,18 +85,22 @@ function LandingPage() {
                 <div className={`w-full flex flex-col justify-start items-center pt-10`}>
                     <h2 className={`w-full text-center font-Telegraf text-black text-3xl font-semibold`}>What we offer</h2>
 
-                    <div className={`w-[90%] mt-5 grid grid-cols-1 md:grid-cols-3 justify-items-center gap-3`}>
-                        <div className={`w-full cursor-default bg-[#E0A470] p-1 h-auto rounded-xl shadow-lg flex flex-col justify-center items-center`}>
+                    <div className={`w-[90%] mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-items-center gap-3`}>
+                        <div className={`w-full cursor-default bg-[#E0A470] p-1 h-auto rounded-xl shadow-lg flex flex-col justify-start items-center`}>
                             <div className={`w-full rounded-xl bg-white/25 inset-shadow-xs inset-shadow-orange-500 flex justify-center items-center text-5xl p-5`}><LuClock /></div>
-                            <p className={`w-full px-5 text-black text-center text-xl py-2 font-semibold`}>24/7 Availability</p>
+                            <p className={`w-full px-5 text-black text-center text-xl lg:text-lg py-2 font-semibold`}>24/7 Availability</p>
                         </div>
-                        <div className={`w-full cursor-default bg-[#E0A470] p-1 h-auto rounded-xl shadow-lg flex flex-col justify-center items-center`}>
+                        <div className={`w-full cursor-default bg-[#E0A470] p-1 h-auto rounded-xl shadow-lg flex flex-col justify-start items-center`}>
                             <div className={`w-full rounded-xl bg-white/25 inset-shadow-xs inset-shadow-orange-500 flex justify-center items-center text-5xl p-5`}><MdOutlineLocalPharmacy /></div>
-                            <p className={`w-full px-5 text-black text-center text-xl py-2 font-semibold`}>In-centre Pharmacy</p>
+                            <p className={`w-full px-5 text-black text-center text-xl lg:text-lg py-2 font-semibold`}>In-centre Pharmacy</p>
                         </div>
-                        <div className={`w-full cursor-default bg-[#E0A470] p-1 h-auto rounded-xl shadow-lg flex flex-col justify-center items-center`}>
+                        <div className={`w-full cursor-default bg-[#E0A470] p-1 h-auto rounded-xl shadow-lg flex flex-col justify-start items-center`}>
                             <div className={`w-full rounded-xl bg-white/25 inset-shadow-xs inset-shadow-orange-500 flex justify-center items-center text-5xl p-5`}><FaHandHoldingMedical /></div>
-                            <p className={`w-full px-5 text-black text-center text-xl py-2 font-semibold`}>Personalised Support</p>
+                            <p className={`w-full px-5 text-black text-center text-xl lg:text-lg py-2 font-semibold`}>Personalised Support</p>
+                        </div>
+                        <div className={`w-full cursor-default bg-[#E0A470] p-1 h-auto rounded-xl shadow-lg flex flex-col justify-start items-center`}>
+                            <div className={`w-full rounded-xl bg-white/25 inset-shadow-xs inset-shadow-orange-500 flex justify-center items-center text-5xl p-5`}><IoSparklesSharp /></div>
+                            <p className={`w-full px-5 text-black text-center text-xl lg:text-lg py-2 font-semibold`}>AI Medical report Scanning</p>
                         </div>
                     </div>
                 </div>
