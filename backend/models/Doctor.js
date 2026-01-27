@@ -7,6 +7,7 @@ const doctorSchema = mongoose.Schema({
   hospital: {type: String, required: false},
   speciality: {type: String, required: false},
   gender: {type: String, required: false},
+  image: {type: String, required: false},
   verified: {type: Boolean, required: false, default: false},
   created: {type: Date, required: false, default: Date.now}
 });

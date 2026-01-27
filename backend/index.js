@@ -4,8 +4,10 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+
 import userAuth from './routes/user/userAuth.js';
 import verifyUser from './routes/user/verifyUser.js';
+import appointmentBook from './routes/user/bookAppointment.js';
 
 import doctorAuth from './routes/doctor/doctorAuth.js';
 import doctorData from './routes/doctor/doctorData.js';
@@ -34,6 +36,7 @@ connectDB();
 
 app.use(userAuth);
 app.use(verifyUser);
+app.use(appointmentBook);
 
 app.use(doctorAuth);
 app.use(doctorData);

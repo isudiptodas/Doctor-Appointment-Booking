@@ -87,5 +87,28 @@ export const emailWorker = new Worker('email', async job => {
             console.log(err);
         }
     }
+
+    // notify a user on account recovery
+    if (job.name === 'appointment-booked') {
+        try {
+            const { name, email, doctorName, date, timeSlot } = job.data;
+            const { data, error } = await resend.emails.send({
+                from: process.env.RESEND_EMAIL,
+                to: [email],
+                subject: 'Appointment Scheduled',
+                html: `<h1>MediLab</h1> \n Hello ${name} <p>\n A new appointment was scheduled for
+                <b>${date}</b> on time between <b>${timeSlot}</b></p> \n\n <p>We hope you will have a seamless
+                appointment experience.</p>\n\n
+                <b>Doctor name : ${doctorName}</b>\n <b>Patient name : ${name}</b>\n<b>Date : ${date}</b>\n<b>Time slot : ${timeSlot}</b>`
+            });
+
+            if (error) {
+                return res.status(400).json({ error });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
 }, { connection: redisConnect });
 
