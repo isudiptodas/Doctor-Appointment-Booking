@@ -8,6 +8,8 @@ import { toast } from "sonner";
 import { IoSearch } from "react-icons/io5";
 import { FaPerson } from "react-icons/fa6";
 import { FaHandHoldingMedical } from "react-icons/fa";
+import { PiPersonSimpleFill } from "react-icons/pi";
+import { LuStethoscope } from "react-icons/lu";
 
 type Doctor = {
   _id: string,
@@ -17,6 +19,7 @@ type Doctor = {
   speciality: string;
   gender?: string;
   verified?: boolean;
+  image?: string,
   created: Date;
 };
 
@@ -30,6 +33,18 @@ function AppointmentBook() {
   const [specVisible, setSpecVisible] = useState(false);
   const [input, setInput] = useState<string | null>(null);
   const [option, setOption] = useState<string | null>(null);
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [appointmentDate, setAppointmentDate] = useState<string | null>(null);
+  const [popupData, setPopupData] = useState<Doctor | null>(null);
+  const today = new Date().toISOString().split("T")[0];
+  const [availableSlots, setAvailableSlots] = useState<string[] | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState('');
+
+  const maxDate = (() => {
+    const d = new Date();
+    d.setMonth(d.getMonth() + 1);
+    return d.toISOString().split("T")[0];
+  })();
 
   const searchDoctor = () => {
     if (!input) {
@@ -100,6 +115,56 @@ function AppointmentBook() {
     fetchAllDoctors();
   }, []);
 
+  const checkSlots = async () => {
+    if (!appointmentDate) {
+      toast.error("Select a date");
+      return;
+    }
+
+    const msg = toast.loading("Checking available slots...");
+
+    try {
+      const res = await axios.post(`http://localhost:5000/api/user/check-slot`, {
+        date: appointmentDate, doctorName: popupData?.name
+      }, { withCredentials: true });
+
+      setAvailableSlots(res.data.slots);
+
+    } catch (err: any) {
+      console.log(err);
+    }
+    finally {
+      toast.dismiss(msg);
+    }
+  }
+
+  const bookAppointment = async () => {
+    if (!appointmentDate) {
+      toast.error("Select a date");
+      return;
+    }
+
+    const msg = toast.loading("Booking...");
+
+    try {
+      const res = await axios.post(`http://localhost:5000/api/user/book-appointment`, {
+        date: appointmentDate, doctorName: popupData?.name, doctorEmail: popupData?.email, timeSlot: selectedSlot
+      }, { withCredentials: true });
+
+     if(res.status === 200){
+      setPopupVisible(false);
+      toast.success("Appointment Booked");
+     }
+
+      console.log(res);
+    } catch (err: any) {
+      console.log(err);
+    }
+    finally {
+      toast.dismiss(msg);
+    }
+  }
+
   return (
     <>
       <div className={`w-full flex flex-col justify-start items-center relative overflow-hidden min-h-screen`}>
@@ -134,15 +199,36 @@ function AppointmentBook() {
         </div>
 
         {/* doctor list */}
-        <div className={`w-full px-5 pt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4`}>
+        <div className={`w-full h-auto px-5 pt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4`}>
           {filteredDoctors?.map((doc, index) => {
             return <div key={index} className={`w-full px-3 py-2 rounded-lg bg-gray-200 p-1 flex flex-col justify-start items-center`}>
               <h1 className={`w-full text-black text-start font-semibold font-Telegraf text-xl`}>{doc.name}</h1>
               <p className={`w-full ${doc.speciality ? "block" : "hidden"} text-black text-start font-semibold font-Telegraf text-sm opacity-75 italic`}>{doc.speciality}</p>
               <p className={`w-full ${doc.gender ? "block" : "hidden"} text-black text-start font-semibold font-Telegraf text-sm opacity-75 italic`}>{doc.gender}</p>
-              <p className={`w-full bg-blue-500 text-white text-center rounded-lg active:opacity-75 duration-150 ease-in-out active:scale-95 cursor-pointer py-3 mt-2`}>More Info</p>
+              <p onClick={() => { setPopupData(doc); setPopupVisible(true); }} className={`w-full bg-blue-500 text-white text-center rounded-lg active:opacity-75 duration-150 ease-in-out active:scale-95 cursor-pointer py-3 mt-2`}>Book Appointment</p>
             </div>
           })}
+        </div>
+
+        {/* booking popup */}
+        <div onClick={() => { setPopupVisible(false); setPopupData(null) }} className={`w-full h-screen fixed top-0 z-30 flex justify-center items-center bg-black/50 ${popupVisible ? "block" : "hidden"}`}>
+          <div onClick={(e) => e.stopPropagation()} className={`w-[95%] md:w-[60%] lg:w-[40%] h-auto flex flex-col justify-start items-center rounded-lg bg-white py-2 px-3 overflow-y-auto hide-scrollbar`}>
+            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZG9jdG9yfGVufDB8fDB8fHww" className={`h-full ${popupData?.image ? "block" : "hidden"} md:h-60 w-full object-cover rounded-lg`} />
+            <h1 className={`w-full text-black text-start font-semibold font-Telegraf mt-2 text-xl`}>{popupData?.name || 'unknown'}</h1>
+            <p className={`w-full ${popupData?.speciality ? "block" : ""} text-black text-start font-Telegraf flex justify-start items-center gap-1 text-sm opacity-75 italic`}><LuStethoscope /> {popupData?.speciality || 'unknown'}</p>
+            <p className={`w-full ${popupData?.gender ? "block" : ""} text-black text-start font-Telegraf flex justify-start items-center gap-1 text-sm opacity-75 italic`}><PiPersonSimpleFill /> {popupData?.gender || 'unknown'}</p>
+            <p className={`w-full text-black text-start font-Telegraf text-sm opacity-75 italic mt-2`}>Select a date :</p>
+
+            <input onChange={(e) => setAppointmentDate(e.target.value)} type="date" min={today} max={maxDate} className={`w-full my-2 px-4 font-Telegraf bg-gray-100 rounded-md py-2`} />
+            <p onClick={checkSlots} className={`w-full ${availableSlots ? "hidden" : "block"} mt-2 py-2 rounded-md bg-orange-300 text-center font-Telegraf text-sm font-semibold active:scale-95 active:opacity-75 duration-150 ease-in-out cursor-pointer`}>Check Available Slots</p>
+
+            <div className={`w-full my-2 grid grid-cols-2 md:grid-cols-4 justify-items-center gap-3`}>
+              {availableSlots && availableSlots.map((item, index) => {
+                return <p onClick={() => setSelectedSlot(item)} key={index} className={`w-full text-[12px] lg:text-[10px] text-center font-Telegraf px-3 py-2 rounded-md ${selectedSlot === item ? "bg-blue-500 text-white" : "bg-gray-200 text-black"} duration-150 ease-in-out cursor-pointer`}>{item}</p>
+              })}
+            </div>
+            <p onClick={bookAppointment} className={`w-full ${selectedSlot ? "block" : "hidden"} mt-2 py-2 rounded-md bg-orange-300 text-center font-Telegraf text-sm font-semibold active:scale-95 active:opacity-75 duration-150 ease-in-out cursor-pointer`}>Book Appointment</p>
+          </div>
         </div>
       </div>
     </>

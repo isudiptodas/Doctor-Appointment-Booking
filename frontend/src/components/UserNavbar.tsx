@@ -14,9 +14,9 @@ function UserNavbar({ pathname }: { pathname: string }) {
                 <p className={`w-full lg:w-[10%] text-black text-lg text-center font-Lora`}>MediLab</p>
                 <span onClick={toggleMenu} className={`w-auto lg:hidden rounded-full bg-linear-to-br from-orange-400 to-orange-600 text-white text-lg absolute right-5 p-2`}><CiMenuBurger /></span>
 
-                <div className={`w-auto hidden lg:flex justify-center items-center gap-3`}>
+                <div className={`w-auto hidden lg:flex justify-center items-center gap-1`}>
                     <p className={`w-auto border-b-2 px-5 py-2 rounded-md ${pathname === '/user/home' ? "border-b-orange-400 text-orange-400 font-semibold" : "border-b-transparent text-black"} hover:bg-gray-100 duration-200 ease-in-out cursor-pointer`}>Home</p>
-                    <p className={`w-auto border-b-2 px-5 py-2 rounded-md ${pathname === '/user/booking' ? "border-b-orange-400 text-orange-400 font-semibold" : "border-b-transparent text-black"} hover:bg-gray-100 duration-200 ease-in-out cursor-pointer`}>Booking</p>
+                    <Link to='/user/booking' className={`w-auto border-b-2 px-5 py-2 rounded-md ${pathname === '/user/booking' ? "border-b-orange-400 text-orange-400 font-semibold" : "border-b-transparent text-black"} hover:bg-gray-100 duration-200 ease-in-out cursor-pointer`}>Booking</Link>
                     <p className={`w-auto border-b-2 px-5 py-2 rounded-md ${pathname === '/user/report' ? "border-b-orange-400 text-orange-400 font-semibold" : "border-b-transparent text-black"} hover:bg-gray-100 duration-200 ease-in-out cursor-pointer`}>Report Analysis</p>
                     <p className={`w-auto border-b-2 px-5 py-2 rounded-md ${pathname === '/user/detection' ? "border-b-orange-400 text-orange-400 font-semibold" : "border-b-transparent text-black"} hover:bg-gray-100 duration-200 ease-in-out cursor-pointer`}>Disease Detection</p>
                     <p className={`w-auto border-b-2 px-5 py-2 rounded-md ${pathname === '/user/profile' ? "border-b-orange-400 text-orange-400 font-semibold" : "border-b-transparent text-black"} hover:bg-gray-100 duration-200 ease-in-out cursor-pointer`}>Profile</p>
