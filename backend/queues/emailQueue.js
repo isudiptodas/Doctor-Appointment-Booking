@@ -66,4 +66,26 @@ export const emailWorker = new Worker('email', async job => {
             console.log(err);
         }
     }
+
+    // notify a user on account recovery
+    if (job.name === 'account-recovery') {
+        try {
+            const { email, name } = job.data;
+            const { data, error } = await resend.emails.send({
+                from: process.env.RESEND_EMAIL,
+                to: [email],
+                subject: 'Password Changed',
+                html: `<h1>MediLab</h1> \n Hello ${name}.\n We saw you changed your password recently. \n
+                       If it's done by you then you can ignore this mail otherwise you can report a message to us 
+                       and we will look on this matter as earliest as possible.`
+            });
+
+            if (error) {
+                return res.status(400).json({ error });
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }, { connection: redisConnect });
+
