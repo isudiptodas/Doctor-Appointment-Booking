@@ -121,4 +121,25 @@ router.post(`/api/user/book-appointment`, authenticate, async (req, res) => {
     }
 });
 
+router.get(`/api/user/get-all-appointments`, authenticate, async (req, res) => {
+    const userData = req.userData;
+
+    try {
+        const found = await Booking.find({ patientEmail: userData.email });
+        
+        return res.status(200).json({
+            success: true,
+            message: `Appointments fetched`,
+            found
+        });
+        
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            success: false,
+            message: `Something went wrong`
+        });
+    }
+});
+
 export default router;
