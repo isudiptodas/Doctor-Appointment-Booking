@@ -17,5 +17,4 @@
   <li>Email reminder for appointments</li>
   <li>AI disease detection</li>
   <li>Medical report scanning</li>
-  <li>Google calender integration</li>
 </ul>
