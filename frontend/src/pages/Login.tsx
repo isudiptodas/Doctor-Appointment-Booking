@@ -33,7 +33,6 @@ function Login() {
       }, { withCredentials: true });
 
       if (res.status === 200) {
-        toast.success("Success");
         setTimeout(() => {
           res.data.role === 'user' && navigate('/user/home');
           res.data.role === 'doctor' && navigate('/doctor/home');

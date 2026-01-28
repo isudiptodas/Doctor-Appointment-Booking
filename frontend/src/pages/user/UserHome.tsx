@@ -30,7 +30,7 @@ function Home() {
   const [futureAppointments, setFutureAppointments] = useState<null | Appointment[] | undefined>(null);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-
+ 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflowY = 'hidden';
@@ -147,7 +147,7 @@ function Home() {
 
   return (
     <>
-      <div className={`w-full min-h-screen relative flex flex-col justify-start items-center overflow-y-auto hide-scrollbar`}>
+      <div className={`w-full bg-linear-to-br from-white via-white to-orange-200 min-h-screen relative flex flex-col justify-start items-center overflow-y-auto hide-scrollbar`}>
         <UserNavbar pathname={location.pathname} />
 
         <h1 className={`w-full text-center mt-20 md:mt-24 text-black text-2xl font-Telegraf font-semibold`}>Manage Appointments</h1>

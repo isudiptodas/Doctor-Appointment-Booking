@@ -167,7 +167,7 @@ function AppointmentBook() {
 
   return (
     <>
-      <div className={`w-full flex flex-col justify-start items-center relative overflow-hidden min-h-screen`}>
+      <div className={`w-full bg-linear-to-br from-white via-white to-orange-200 flex flex-col justify-start items-center relative overflow-hidden min-h-screen`}>
         <UserNavbar pathname={location.pathname} />
 
         <div className={`w-full mt-24 flex flex-col justify-start items-center`}>
