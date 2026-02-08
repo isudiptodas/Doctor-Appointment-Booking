@@ -11,6 +11,7 @@
   <li>Role based access control</li>
   <li>Account recovery with email based OTP</li>
   <li>User input validation</li>
+  <li>Rate limiting & bot protection</li>
 </ul>
 
 <p><b>Features :</b></p>
